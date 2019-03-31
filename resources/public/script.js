@@ -1,8 +1,2 @@
-$("#sum").click(function() {
-  let a = $("#a").val()
-  let b = $("#b").val()
+var data = [4, 8, 15, 16, 23, 42];
 
-  $.get("calculator/" + a + "/+/" + b, function(data) {
-    $("#result").text(data)
-  });
-});

@@ -1,4 +1,12 @@
-/* body {
+/*
+body {
   background-color: #121212;
   color: #c5a6ff;
+}
+*/
+
+.line {
+  fill: none;
+  stroke: green;
+  stroke-width: 5px;
 }
