@@ -1,12 +1,8 @@
-/*
-body {
-  background-color: #121212;
-  color: #c5a6ff;
-}
-*/
-
-.line {
-  fill: none;
-  stroke: green;
-  stroke-width: 5px;
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
 }
