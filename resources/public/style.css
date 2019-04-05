@@ -3,6 +3,14 @@ body {
   color: white;
 }
 
+.container {
+  margin: 40px;
+}
+
+.row {
+  margin-left: 50px;
+}
+
 .line {
   fill: none;
   stroke: white;
