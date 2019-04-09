@@ -43,17 +43,27 @@ svg.append("g")
 
 function updateGraph(lambda, generations) {
   fetchData(lambda, generations, function(data) {
+
+    let stablePops = findStablePops(data)
+    $("#periodicity").text(stablePops.size)
+    $("#stablePops").html(Array.from(stablePops).join("<br>"))
+
+    data.forEach(function(val, i) {
+      data[i] = { generation: i, population: val }
+    })
+
     x.domain(data.map(function(d) { return d.generation }))
 
     let line = d3.line()
       .x(function(d) { return x(d.generation) })
       .y(function(d) { return y(d.population) })
 
-    var svg = d3.select("svg").transition()
+    let svg = d3.select("svg").transition()
 
     svg.select(".line")
         .duration(750)
         .attr("d", line(data))
+
   })
 }
 
@@ -64,12 +74,12 @@ function fetchData(lambda, generations, callback) {
   })
 }
 
+function findStablePops(populations) {
+  return new Set(populations.slice(-30, -1))
+}
+
 function parseResponse(res) {
-  data = res.slice(1,-1).split(" ")
-  data.forEach(function(val, i) {
-    data[i] = { generation: i, population: val }
-  })
-  return data
+  return res.slice(1,-1).split(" ")
 }
 
 $("#generate").click(function() {
@@ -84,4 +94,4 @@ $('input[type=range]').change(function(){
   $("#lambda_value").text(lambda)
 
   updateGraph(lambda, 100)
-});
+})

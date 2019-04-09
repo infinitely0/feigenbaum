@@ -11,6 +11,11 @@ body {
   margin-left: 50px;
 }
 
+.info {
+  float: right;
+  margin-top: 40px;
+}
+
 .line {
   fill: none;
   stroke: white;
