@@ -11,9 +11,22 @@ body {
   margin-left: 50px;
 }
 
-.info {
+#info {
   float: right;
   margin-top: 40px;
+}
+
+#stablePops {
+  padding: 10px;
+  height: 220px;
+  border:1px solid #ccc;
+  overflow:auto;
+}
+
+.view {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
 }
 
 .line {

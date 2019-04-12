@@ -8,24 +8,22 @@
   </head>
   <body>
 
-    <div class="container">
+    <div id="page1" class="container" style="display:none">
 
       <div class="row">
         <input placeholder="lambda" type="number" step="0.01" max="4" id="lambda">
         <input placeholder="generations" type="number" max="500" id="generations">
-        <button id="generate">Generate</button>
+        <button id="drawPopulations">Generate</button>
       </div>
 
-      <div>
-        <svg class="chart"></svg>
+      <svg class="chart"></svg>
 
-        <div class="info">
-          <h4>Periodicity: <span id="periodicity"></span></h4>
-          <hr>
-          <h4>Stable populations:</h4>
-          <div id="stablePops"></div>
-          <br>
-        </div>
+      <div id="info">
+        <h4>Periodicity: <span id="periodicity"></span></h4>
+        <hr>
+        <h4>Stable populations:</h4>
+        <div id="stablePops"></div>
+        <br>
       </div>
 
       <div class="row">
@@ -33,6 +31,16 @@
         <input type="range" min="0" max="3.99" step="0.01" value="0" id="slider">
         <span id="lambda_value"></span>
       </div>
+
+      <button class="view" id="viewBifurcations">View bifurcations</button>
+    </div>
+
+    <div id="page2" class="container" style="display:block">
+      <button id="drawBifurcations">Draw</button>
+
+      <svg class="chart2"></svg>
+
+      <button class="view" id="viewPopulations">View populations</button>
     </div>
 
     <script src="jquery-3.3.1.min.js"></script>

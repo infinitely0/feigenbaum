@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  $('#generate').trigger('click')
+  $('#drawBifurcations').trigger('click')
 
 })
 
@@ -23,7 +23,7 @@ y.domain([0, 1])
 
 let line = d3.line()
 
-let svg = d3.select("svg")
+let svg = d3.select(".chart")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -41,8 +41,22 @@ svg.append("g")
 svg.append("g")
     .call(d3.axisLeft(y))
 
-function updateGraph(lambda, generations) {
-  fetchData(lambda, generations, function(data) {
+function fetchPopulations(lambda, gens, callback) {
+  $.get("/populations/" + lambda + "/" + gens, function(res) {
+    let data = parsePopulations(res)
+    callback(data)
+  })
+}
+
+function fetchBifurcations(lambda, gens, step, callback) {
+  $.get("/bifurcations/" + lambda + "/" + gens + "/" + step, function(res) {
+    let data = parseBifurcations(res)
+    callback(data)
+  })
+}
+
+function drawPopulations(lambda, generations) {
+  fetchPopulations(lambda, generations, function(data) {
 
     let stablePops = findStablePops(data)
     $("#periodicity").text(stablePops.size)
@@ -58,40 +72,57 @@ function updateGraph(lambda, generations) {
       .x(function(d) { return x(d.generation) })
       .y(function(d) { return y(d.population) })
 
-    let svg = d3.select("svg").transition()
+    let svg = d3.select(".chart").transition()
 
     svg.select(".line")
         .duration(750)
         .attr("d", line(data))
-
   })
 }
 
-function fetchData(lambda, generations, callback) {
-  $.get("/populations/" + lambda + "/" + generations, function(res) {
-    let data = parseResponse(res)
-    callback(data)
+function drawBifurcations(lambda, gens, step) {
+  fetchBifurcations(lambda, gens, step, function(data) {
+    console.log(data)
   })
 }
 
 function findStablePops(populations) {
-  return new Set(populations.slice(-30, -1))
+  return new Set(populations.slice(-100, -1))
 }
 
-function parseResponse(res) {
+function parsePopulations(res) {
   return res.slice(1,-1).split(" ")
 }
 
-$("#generate").click(function() {
+function parseBifurcations(res) {
+  return JSON.parse(res)
+}
+
+$("#drawPopulations").click(function() {
   let lambda = $("#lambda").val()
   let generations = $("#generations").val()
 
-  updateGraph(lambda, generations)
+  drawPopulations(lambda, generations)
 })
 
 $('input[type=range]').change(function(){
   let lambda = $(this).val()
   $("#lambda_value").text(lambda)
 
-  updateGraph(lambda, 100)
+  drawPopulations(lambda, 200)
 })
+
+$("#drawBifurcations").click(function() {
+  drawBifurcations(0, 100, 0.1)
+})
+
+$("#viewBifurcations").click(function() {
+  $("#page1").hide()
+  $("#page2").show()
+})
+
+$("#viewPopulations").click(function() {
+  $("#page1").show()
+  $("#page2").hide()
+})
+

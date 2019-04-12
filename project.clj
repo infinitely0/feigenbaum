@@ -5,7 +5,8 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [ring "1.7.1"]
-                 [compojure "1.6.1"]]
+                 [compojure "1.6.1"]
+                 [cheshire "5.8.1"]]
   :main ^:skip-aot feigenbaum.core
   :target-path "target/%s"
   :profiles {:dev {:main feigenbaum.core/-dev}})

@@ -8,7 +8,7 @@
 
 (defn get-next-pop [previous lambda]
   "Calculates population of next generation"
-  (round (* lambda previous (- 1.0 previous)) 4))
+  (round (* lambda previous (- 1.0 previous)) 3))
 
 (defn gen-pops
   "Generate populations over specified number of generations"
@@ -30,8 +30,7 @@
         stable-pops (find-stable-pops pops-list)]
     (if (< lambda 4.)
       (gen-stable-pops
-        (conj stable-pops-arr stable-pops)
-        start-pop (+ lambda step) (- gens 1) step)
+        (conj stable-pops-arr stable-pops) start-pop (+ lambda step) (- gens 1) step)
       stable-pops-arr)))
 
 ;(defn -main
