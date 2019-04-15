@@ -23,15 +23,34 @@
   [pops-list]
   (set (take-last 16 pops-list)))
 
+(def min-gens
+  "Minumum number of generations required to show roughly accurate bifurcations"
+  150)
+
 (defn gen-stable-pops
   "Generate stable populations for different lambdas"
-  [stable-pops-arr start-pop lambda gens step]
-  (let [pops-list (gen-pops (list start-pop) start-pop lambda gens)
-        stable-pops (find-stable-pops pops-list)]
-    (if (< lambda 4.)
-      (gen-stable-pops
-        (conj stable-pops-arr stable-pops) start-pop (+ lambda step) (- gens 1) step)
-      stable-pops-arr)))
+  [start-lambda end-lambda step]
+  (def stable-pops-list [])
+  (doseq [lambda (range start-lambda (+ end-lambda step) step)]
+    (def pops-list (gen-pops (list 0.5) 0.5 lambda min-gens))
+    (def stable-pops (find-stable-pops pops-list))
+    (def stable-pops-list
+      (conj stable-pops-list
+          {:lambda lambda
+           :populations stable-pops})))
+  stable-pops-list)
+
+; Same function as above but works recursively (causes stack overflow when
+; granurality of lambda is high)
+;(defn gen-stable-pops
+;  "Generate stable populations for different lambdas"
+;  [stable-pops-arr start-pop lambda gens step]
+;  (let [pops-list (gen-pops (list start-pop) start-pop lambda gens)
+;        stable-pops (find-stable-pops pops-list)]
+;    (if (< lambda 4.)
+;      (gen-stable-pops
+;        (conj stable-pops-arr stable-pops) start-pop (+ lambda step) (- gens 1) step)
+;      stable-pops-arr)))
 
 ;(defn -main
 ;  [& args]

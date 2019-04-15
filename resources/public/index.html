@@ -8,15 +8,17 @@
   </head>
   <body>
 
-    <div id="page1" class="container" style="display:none">
+    <div id="page1" class="container" style="display:block">
 
       <div class="row">
-        <input placeholder="lambda" type="number" step="0.01" max="4" id="lambda">
-        <input placeholder="generations" type="number" max="500" id="generations">
-        <button id="drawPopulations">Generate</button>
+        Lambda:
+        <input placeholder="0 > x > 4" type="number" step="0.01" max="4" id="lambda">
+        Generations:
+        <input type="number" placeholder="max 500", max="500" id="generations">
+        <button id="drawPops">Generate</button>
       </div>
 
-      <svg class="chart"></svg>
+      <svg class="populationsChart"></svg>
 
       <div id="info">
         <h4>Periodicity: <span id="periodicity"></span></h4>
@@ -35,10 +37,18 @@
       <button class="view" id="viewBifurcations">View bifurcations</button>
     </div>
 
-    <div id="page2" class="container" style="display:block">
-      <button id="drawBifurcations">Draw</button>
+    <div id="page2" class="container" style="display:none">
+      <div class="row">
+        Start lambda:
+        <input id="startLambda" value="0" size="5">
+        End lambda:
+        <input id="endLambda" value="3.99" size="5">
+        Step:
+        <input id="step" value="0.01" size="5">
+        <button id="drawBifurcations">Draw</button>
+      </div>
 
-      <svg class="chart2"></svg>
+      <svg class="bifurcationsChart"></svg>
 
       <button class="view" id="viewPopulations">View populations</button>
     </div>
